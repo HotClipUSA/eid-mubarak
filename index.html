@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eid Mubarak My Dearest Best Friend!</title>
+    <style>
+        /* CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow-x: hidden;
+            background: linear-gradient(to bottom, #0a0a2a, #1a0033);
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Loading Screen */
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 1.5rem;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            z-index: 1000;
+        }
+
+        .loading::after {
+            content: '✨';
+            position: absolute;
+            font-size: 24px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Main Container */
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 1000px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            opacity: 0;
+            animation: fadeIn 1s forwards 1s;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Photo Frame */
+        .photo-frame {
+            position: relative;
+            width: 90%;
+            max-width: 320px;
+            height: auto;
+            aspect-ratio: 1/1;
+            border-radius: 20px;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #a18cd1);
+            background-size: 300% 300%;
+            animation: gradientBG 8s ease infinite, float 4s ease-in-out infinite;
+            padding: 15px;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.7), 
+                        0 0 50px rgba(255, 20, 147, 0.5),
+                        0 0 70px rgba(0, 191, 255, 0.3);
+            margin-bottom: 30px;
+            border: 8px solid #ffd700;
+            z-index: 20;
+            transform: scale(0);
+            animation: scaleIn 0.8s forwards 2s, float 4s ease-in-out infinite 2.8s;
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 4px solid white;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+            filter: brightness(1.05) contrast(1.1);
+            transition: all 0.3s ease;
+        }
+
+        /* Greeting Text */
+        .greeting {
+            text-align: center;
+            color: white;
+            margin: 20px 0;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1.5s forwards 3s;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .greeting h1 {
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #ffd700, #ff8c00, #ffd700);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            animation: textGlow 2s ease-in-out infinite alternate;
+            line-height: 1.2;
+            padding: 0 10px;
+        }
+
+        .greeting p {
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            margin-bottom: 15px;
+            color: #f0f0f0;
+            line-height: 1.6;
+        }
+
+        /* Animations */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes scaleIn {
+            to { transform: scale(1); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes textGlow {
+            from { text-shadow: 0 0 5px #ffd700, 0 0 10px #ff8c00; }
+            to { text-shadow: 0 0 10px #ffd700, 0 0 20px #ff8c00, 0 0 30px #ff4500; }
+        }
+
+        /* Decorative Elements */
+        .eid-moon {
+            position: fixed;
+            top: 10%;
+            right: 10%;
+            width: clamp(60px, 15vw, 100px);
+            height: clamp(60px, 15vw, 100px);
+            background: radial-gradient(circle at 30% 30%, #ffd700, #ff8c00);
+            border-radius: 50%;
+            box-shadow: 0 0 40px #ffd700;
+            z-index: 5;
+            opacity: 0;
+            animation: fadeIn 1s forwards 2s, pulse 3s ease-in-out infinite 3s;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .eid-moon::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            right: 20%;
+            width: 80%;
+            height: 80%;
+            background: #0a0a2a;
+            border-radius: 50%;
+        }
+
+        /* Fireworks */
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.8);
+            animation: explode 1s ease-out forwards;
+            transform: scale(0);
+            opacity: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            animation: particle 1s ease-out forwards;
+            filter: drop-shadow(0 0 2px currentColor);
+        }
+
+        @keyframes explode {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(1); opacity: 0; }
+        }
+
+        @keyframes particle {
+            0% { transform: translate(0, 0); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)); opacity: 0; }
+        }
+
+        /* Floating Elements */
+        .floating-element {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1;
+            animation: floatUp 6s ease-in-out infinite;
+            opacity: 0;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .photo-frame {
+                max-width: 280px;
+                padding: 12px;
+                border-width: 6px;
+            }
+            
+            .greeting {
+                padding: 15px;
+                margin: 15px 0;
+            }
+            
+            .eid-moon {
+                top: 5%;
+                right: 5%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .photo-frame {
+                max-width: 250px;
+                padding: 10px;
+                border-width: 5px;
+            }
+            
+            .greeting h1 {
+                font-size: 2.2rem;
+            }
+            
+            .greeting p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading">Preparing a magical Eid surprise...</div>
+    
+    <div class="container">
+        <div class="eid-moon"></div>
+        
+        <div class="photo-frame">
+            <!-- Replace with your image -->
+            <img src="images/Riyan_20250315_164514_🥬Green City Nature (LMC17) By Light Editz.PORTRAIT.jpg" alt="My Amazing Best Friend">
+        </div>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <button style="
+                background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+                color: white;
+                font-size: 18px;
+                padding: 12px 25px;
+                border: none;
+                border-radius: 25px;
+                cursor: pointer;
+                box-shadow: 0 5px 15px rgba(255, 0, 150, 0.3);
+                transition: 0.3s ease-in-out;
+                font-family: 'Comic Sans MS', cursive, sans-serif;
+            " onmouseover="this.style.transform='scale(1.1)';" 
+              onmouseout="this.style.transform='scale(1)';">
+              🎵 Play Music 🎶
+            </button>
+        </div>
+        
+
+        <div class="greeting">
+            <h1>Eid Mubarak!</h1>
+            <p>To the one who makes my life brighter than all these fireworks...</p>
+            <p>May this Eid fill your days with joy, your heart with love, and your life with endless happiness!</p>
+            <p>Every moment with you is special, but today I want you to know just how much you mean to me.</p>
+            <p>❤️ Your best friend forever ❤️</p>
+        </div>
+    </div>
+    
+    <audio id="fireworkSound" src="" preload="metadata"></audio>
+    <audio id="bgMusic" src="audio/videoplayback.mp3" loop preload="metadata"></audio>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.querySelector('.container');
+            const loading = document.querySelector('.loading');
+            const fireworkSound = document.getElementById('fireworkSound');
+            const bgMusic = document.getElementById('bgMusic');
+            
+            // Check if image is loaded
+            const checkImage = setInterval(() => {
+                const img = document.querySelector('.photo-frame img');
+                if (img.complete && img.naturalHeight !== 0) {
+                    clearInterval(checkImage);
+                    startAnimation();
+                }
+            }, 100);
+            
+            // Fallback in case image check fails
+            setTimeout(startAnimation, 3000);
+            
+            function startAnimation() {
+                loading.style.display = 'none';
+                container.style.opacity = '1';
+                
+                // Play music with user interaction
+                const playMusic = () => {
+                    bgMusic.play().catch(e => {
+                        console.log("Autoplay prevented:", e);
+                        const playBtn = document.createElement('button');
+                        playBtn.textContent = 'Tap to Play Music';
+                        playBtn.style.position = 'fixed';
+                        playBtn.style.bottom = '20px';
+                        playBtn.style.left = '50%';
+                        playBtn.style.transform = 'translateX(-50%)';
+                        playBtn.style.padding = '12px 24px';
+                        playBtn.style.background = 'linear-gradient(to right, #ff8a00, #da1b60)';
+                        playBtn.style.color = 'white';
+                        playBtn.style.border = 'none';
+                        playBtn.style.borderRadius = '25px';
+                        playBtn.style.cursor = 'pointer';
+                        playBtn.style.zIndex = '100';
+                        playBtn.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3)';
+                        playBtn.addEventListener('click', () => {
+                            bgMusic.play();
+                            playBtn.remove();
+                        });
+                        document.body.appendChild(playBtn);
+                    });
+                };
+                
+                document.body.addEventListener('click', playMusic, { once: true });
+                
+                // Create fireworks
+                createFireworks(15);
+                
+                // Create floating elements
+                createFloatingElements('❤️', 30, 'hearts', '#ff69b4');
+                createFloatingElements('🌸', 20, 'flowers', '#ffffff');
+            }
+            
+            function createFireworks(count) {
+                for (let i = 0; i < count; i++) {
+                    setTimeout(() => {
+                        createFirework();
+                    }, i * 300);
+                }
+                
+                setInterval(() => {
+                    if (Math.random() > 0.7) createFirework();
+                }, 2000);
+            }
+            
+            function createFirework() {
+                const firework = document.createElement('div');
+                firework.className = 'firework';
+                
+                const x = Math.random() * window.innerWidth;
+                const y = Math.random() * window.innerHeight * 0.6;
+                const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#ff8c00', '#ff1493'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                firework.style.left = `${x}px`;
+                firework.style.top = `${y}px`;
+                firework.style.backgroundColor = color;
+                firework.style.boxShadow = `0 0 15px 8px ${color}`;
+                
+                document.body.appendChild(firework);
+                
+                fireworkSound.currentTime = 0;
+                fireworkSound.play().catch(e => console.log("Sound prevented:", e));
+                
+                setTimeout(() => {
+                    createParticles(x, y, color);
+                    firework.remove();
+                }, 800);
+            }
+            
+            function createParticles(x, y, color) {
+                const particleCount = 40;
+                
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = 70 + Math.random() * 100;
+                    const tx = Math.cos(angle) * distance;
+                    const ty = Math.sin(angle) * distance;
+                    
+                    particle.style.setProperty('--tx', `${tx}px`);
+                    particle.style.setProperty('--ty', `${ty}px`);
+                    particle.style.left = `${x}px`;
+                    particle.style.top = `${y}px`;
+                    particle.style.backgroundColor = color;
+                    
+                    document.body.appendChild(particle);
+                    
+                    setTimeout(() => {
+                        particle.remove();
+                    }, 1000);
+                }
+            }
+            
+            function createFloatingElements(content, count, type, color) {
+                const container = document.createElement('div');
+                container.className = 'floating-elements';
+                container.style.position = 'fixed';
+                container.style.top = '0';
+                container.style.left = '0';
+                container.style.width = '100%';
+                container.style.height = '100%';
+                container.style.pointerEvents = 'none';
+                container.style.zIndex = '1';
+                document.body.appendChild(container);
+                
+                for (let i = 0; i < count; i++) {
+                    setTimeout(() => {
+                        createFloatingElement(container, content, type, color);
+                    }, i * 300);
+                }
+                
+                setInterval(() => {
+                    if (Math.random() > 0.5) {
+                        createFloatingElement(container, content, type, color);
+                    }
+                }, 2000);
+            }
+            
+            function createFloatingElement(container, content, type, color) {
+                const element = document.createElement('div');
+                element.className = 'floating-element';
+                element.innerHTML = content;
+                
+                const x = Math.random() * window.innerWidth;
+                const duration = 6 + Math.random() * 6;
+                const delay = Math.random() * 5;
+                const size = type === 'hearts' 
+                    ? 15 + Math.random() * 25 
+                    : 20 + Math.random() * 30;
+                
+                element.style.left = `${x}px`;
+                element.style.bottom = '-30px';
+                element.style.fontSize = `${size}px`;
+                element.style.color = color || '#ffffff';
+                element.style.animationDuration = `${duration}s`;
+                element.style.animationDelay = `${delay}s`;
+                
+                if (type === 'hearts') {
+                    element.style.filter = 'drop-shadow(0 0 5px rgba(255, 20, 147, 0.7))';
+                } else {
+                    element.style.filter = 'drop-shadow(0 0 5px rgba(255, 255, 255, 0.5))';
+                }
+                
+                container.appendChild(element);
+                
+                setTimeout(() => {
+                    element.remove();
+                }, (duration + delay) * 1000);
+            }
+            
+            // Handle image error
+            document.querySelector('.photo-frame img').addEventListener('error', function() {
+                console.log("Image failed to load, using placeholder");
+                this.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300" fill="%23ffd700"><rect width="300" height="300" fill="%23fad0c4"/><text x="150" y="150" font-size="24" text-anchor="middle" fill="%23ff1493">Best Friend Photo</text></svg>';
+            });
+        });
+    </script>
+</body>
+</html>
